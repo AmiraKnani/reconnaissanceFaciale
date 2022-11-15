@@ -15,6 +15,7 @@ for cl in myList:
     classNames.append(os.path.splitext(cl)[0])
 print(classNames)
 
+#test
 
 def findEncoding(images):
     encodeList = []
