@@ -67,8 +67,8 @@ for encodeFace, faceLoc in zip(encodesCurFrame,facesCurFrame) :
     faceDis = face_recognition.face_distance(encodeListKnown,encodeFace)
     # print(faceDis)
     matchIndex = np.argmin(faceDis)
-    cv2.imshow('Webcam', img)
-    cv2.waitKey(1)
+    #cv2.imshow('Webcam', img)
+    #cv2.waitKey(1)
     if matches[matchIndex]:
         name = classNames[matchIndex].upper()
         print(name)
@@ -94,9 +94,10 @@ for encodeFace, faceLoc in zip(encodesCurFrame,facesCurFrame) :
         welcome.place(x=100, y=100)
 
         AffName = Label(frame, text=name, fg='black', bg='white',
-                            font=('Microsoft YaHei UI Light', 18, 'bold'))
-        AffName.place(x=100, y=200)
+                            font=('Bradley Hand ITC', 25,'bold'))
+        AffName.place(x=100, y=170)
 
+        Button(frame, width=39, pady=10, text='Access to Home', bg='#57a1f8', fg='white', border=0,).place(x=100,y=240)
         root.mainloop()
     else:
         messagebox.showerror("Invalid","You dont have access here!")
