@@ -3,6 +3,16 @@ import numpy as np
 import face_recognition
 import os
 from datetime import datetime
+from tkinter import *
+from tkinter import messagebox
+
+root=Tk()
+root.title('Login')
+root.geometry('925x500+300+200')
+root.configure(bg="#fff")
+root.resizable(False,False)
+
+
 
 path = 'ImagesAttendance'
 images = []
@@ -44,32 +54,55 @@ print('Encoding Complete')
 
 cap = cv2.VideoCapture(0)
 
-while True:
-    success, img = cap.read()
-    imgS = cv2.resize(img,(0,0), None, 0.25, 0.25 )
-    imgS = cv2.cvtColor(imgS, cv2.COLOR_BGR2RGB)
 
-    facesCurFrame = face_recognition.face_locations(imgS)
-    encodesCurFrame = face_recognition.face_encodings(imgS,facesCurFrame)
+success, img = cap.read()
+imgS = cv2.resize(img,(0,0), None, 0.25, 0.25 )
+imgS = cv2.cvtColor(imgS, cv2.COLOR_BGR2RGB)
 
-    for encodeFace, faceLoc in zip(encodesCurFrame,facesCurFrame) :
-        matches = face_recognition.compare_faces(encodeListKnown,encodeFace)
-        faceDis = face_recognition.face_distance(encodeListKnown,encodeFace)
-        # print(faceDis)
-        matchIndex = np.argmin(faceDis)
+facesCurFrame = face_recognition.face_locations(imgS)
+encodesCurFrame = face_recognition.face_encodings(imgS,facesCurFrame)
 
-        if matches[matchIndex]:
-            name = classNames[matchIndex].upper()
-            print(name)
-            y1,x2,y2,x1 = faceLoc
-            y1, x2, y2, x1 = y1*4,x2*4,y2*4,x1*4
-            cv2.rectangle(img,(x1,y1),(x2,y2),(0,255,0),2)
-            cv2.rectangle(img,(x1,y2-35),(x2,y2),(0,255,0),cv2.FILLED)
-            cv2.putText(img,name,(x1+6,y2-6),cv2.FONT_HERSHEY_COMPLEX,1,(255,255,255),2)
-            markAttendance(name)
-
-    cv2.imshow('Webcam',img)
+for encodeFace, faceLoc in zip(encodesCurFrame,facesCurFrame) :
+    matches = face_recognition.compare_faces(encodeListKnown,encodeFace)
+    faceDis = face_recognition.face_distance(encodeListKnown,encodeFace)
+    # print(faceDis)
+    matchIndex = np.argmin(faceDis)
+    cv2.imshow('Webcam', img)
     cv2.waitKey(1)
+    if matches[matchIndex]:
+        name = classNames[matchIndex].upper()
+        print(name)
+        y1,x2,y2,x1 = faceLoc
+        y1, x2, y2, x1 = y1*4,x2*4,y2*4,x1*4
+        cv2.rectangle(img,(x1,y1),(x2,y2),(0,255,0),2)
+        cv2.rectangle(img,(x1,y2-35),(x2,y2),(0,255,0),cv2.FILLED)
+        cv2.putText(img,name,(x1+6,y2-6),cv2.FONT_HERSHEY_COMPLEX,1,(255,255,255),2)
+        markAttendance(name)
+
+        img = PhotoImage(file='login.png')
+        Label(root, image=img, bg='white').place(x=50, y=50)
+
+        frame = Frame(root, width=350, height=350, bg="white")
+        frame.place(x=480, y=70)
+
+        heading = Label(frame, text='Sign in', fg='#57a1f8', bg='white',
+                            font=('Microsoft YaHei UI Light', 23, 'bold'))
+        heading.place(x=100, y=5)
+
+        welcome = Label(frame, text='WELCOME', fg='black', bg='white',
+                            font=('Microsoft YaHei UI Light', 18, 'bold'))
+        welcome.place(x=100, y=100)
+
+        AffName = Label(frame, text=name, fg='black', bg='white',
+                            font=('Microsoft YaHei UI Light', 18, 'bold'))
+        AffName.place(x=100, y=200)
+
+        root.mainloop()
+    else:
+        messagebox.showerror("Invalid","You dont have access here!")
+
+
+#
 
 
 
