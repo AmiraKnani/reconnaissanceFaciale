@@ -6,7 +6,7 @@ from datetime import datetime
 from tkinter import *
 from tkinter import messagebox
 
-root=Tk()
+root=Toplevel()
 root.title('Login')
 root.geometry('925x500+300+200')
 root.configure(bg="#fff")
@@ -85,12 +85,12 @@ for encodeFace, faceLoc in zip(encodesCurFrame,facesCurFrame) :
         frame = Frame(root, width=350, height=350, bg="white")
         frame.place(x=480, y=70)
 
-        heading = Label(frame, text='Sign in', fg='#57a1f8', bg='white',
-                            font=('Microsoft YaHei UI Light', 23, 'bold'))
+        heading = Label(frame, text='Sign in successful', fg='#57a1f8', bg='white',
+                            font=('Microsoft YaHei UI Light', 22, 'bold'))
         heading.place(x=100, y=5)
 
-        welcome = Label(frame, text='WELCOME', fg='black', bg='white',
-                            font=('Microsoft YaHei UI Light', 18, 'bold'))
+        welcome = Label(frame, text='Welcome MADAME/SIR', fg='black', bg='white',
+                            font=('Microsoft YaHei UI Light', 14, 'bold'))
         welcome.place(x=100, y=100)
 
         AffName = Label(frame, text=name, fg='black', bg='white',

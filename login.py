@@ -21,6 +21,21 @@ def signin():
         exec(open('AttendanceProject.py').read())
     else:
         messagebox.showerror("Invalid","Invalid data!")
+def signin1():
+    username=user.get()
+    password=code.get()
+    if username=='admin' and password=='1234':
+        screen=Toplevel(root)
+        screen.title("App")
+        screen.geometry('925x500+300+200')
+        screen.config(bg="white")
+        Label(screen,text='Hello Student!',bg='#fff',font=('Calibri(Body)',50,'bold')).pack(expand=True)
+        Button(screen, width=39, pady=10, text='Access to Home', bg='#57a1f8', fg='white', border=0, ).place(x=320,
+                                                                                                            y=340)
+        screen.mainloop()
+    else:
+        messagebox.showerror("Invalid","Invalid data!")
+
 
 def on_enter(e):
     user.delete(0,'end')
@@ -66,11 +81,14 @@ code.bind('<FocusOut>', on_leave)
 
 Frame(frame,width=295,height=2,bg='black').place(x=25,y=107)
 
-Button(frame,width=39,pady=7,text='Sign in',bg='#57a1f8',fg='white',border=0,command=signin).place(x=35,y=204)
+Button(frame,width=19,pady=7,text='Sign in as Student',bg='#57a1f8',fg='white',border=0,command=signin1).place(x=30,y=204)
 label=Label(frame,text="Don't have an account?", fg='black',bg='white',font=('Microsoft YaHei UI Light',9))
 label.place(x=75,y=270)
 
+Button(frame,width=19,pady=7,text='Sign in as Administrator',bg='#57a1f8',fg='white',border=0,command=signin).place(x=195,y=204)
+
 sign_up=Button(frame,width=6,text='Sign up',border=0,bg='white',cursor='hand2',fg='#57a1f8')
 sign_up.place(x=215,y=270)
+
 
 root.mainloop()
