@@ -35,6 +35,14 @@ def findEncoding(images):
         encodeList.append(encode)
     return encodeList
 
+def getRole(name):
+    with open('Attendance.csv','r+') as f:
+        myDataList = f.readlines()
+        nameList = []
+        for line in f:
+            if name in line:
+                role = line[2]
+    return role
 def markAttendance(name):
     with open('Attendance.csv','r+') as f:
         myDataList = f.readlines()
