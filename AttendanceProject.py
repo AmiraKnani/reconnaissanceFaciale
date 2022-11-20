@@ -79,16 +79,22 @@ def findEncoding(images):
     return encodeList
 
 def getRole(name):
-    with open('Attendance.csv','r+') as f:
-        myDataList = f.readlines()
-        nameList = []
-        for line in myDataList:
-            entry = line.split(',')
-            nameList.append(entry[0])
-        if name not in nameList:
-            now = datetime.now()
-            dtString = now.strftime('%H:%M:%S')
-            f.readlines(f'\n{name},{dtString}')
+    fileObj = open("Attendance.csv", "r")  # opens the file in read mode.
+    words = fileObj.read().splitlines()  # puts the file into an array.
+    fileObj.close()
+    for key in words:
+        if name in key:
+            print(key[-1])
+            role = key[-1]
+    return role
+
+def printRole(name):
+    fileObj = open("Attendance.csv", "r")  # opens the file in read mode.
+    words = fileObj.read().splitlines()  # puts the file into an array.
+    fileObj.close()
+    for key in words:
+        if name in key:
+            print(key[-1])
 def markAttendance(name):
     with open('Attendance.csv','r+') as f:
         myDataList = f.readlines()
@@ -144,13 +150,24 @@ for encodeFace, faceLoc in zip(encodesCurFrame,facesCurFrame) :
         heading.place(x=100, y=5)
 
         if(findBeard()):
-            welcome = Label(frame, text='Welcome SIR', fg='black', bg='white',
-                                font=('Microsoft YaHei UI Light', 14, 'bold'))
-            welcome.place(x=100, y=100)
+            if getRole(name) == 'A':
+                welcome = Label(frame, text='Welcome Admin SIR', fg='black', bg='white',
+                                    font=('Microsoft YaHei UI Light', 14, 'bold'))
+                welcome.place(x=100, y=100)
+            if getRole(name) == 'U':
+                welcome = Label(frame, text='Welcome User SIR', fg='black', bg='white',
+                                    font=('Microsoft YaHei UI Light', 14, 'bold'))
+                welcome.place(x=100, y=100)
         else:
-            welcome = Label(frame, text='Welcome MADAME', fg='black', bg='white',
-                            font=('Microsoft YaHei UI Light', 14, 'bold'))
-            welcome.place(x=100, y=100)
+            if getRole(name) == 'A':
+                welcome = Label(frame, text='Welcome Admin Madame', fg='black', bg='white',
+                                    font=('Microsoft YaHei UI Light', 14, 'bold'))
+                welcome.place(x=100, y=100)
+            if getRole(name) == 'U':
+                welcome = Label(frame, text='Welcome User Madame', fg='black', bg='white',
+                                    font=('Microsoft YaHei UI Light', 14, 'bold'))
+                welcome.place(x=100, y=100)
+
 
         AffName = Label(frame, text=name, fg='black', bg='white',
                             font=('Bradley Hand ITC', 25,'bold'))
